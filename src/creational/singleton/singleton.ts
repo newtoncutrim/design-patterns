@@ -1,4 +1,4 @@
-import { Users } from './interfaces/users';
+import { Users } from './interfaces/users-singleton';
 
 /**
  * Padrão Singleton
