@@ -6,33 +6,20 @@ import { Users } from './interfaces/users-singleton';
  * O Singleton é um padrão criacional que garante que uma classe tenha
  * apenas uma única instância durante toda a execução da aplicação.
  *
- * Neste exemplo, o construtor é privado para impedir que outras partes
- * do código criem novos objetos usando `new Singleton()`.
+ * Neste exemplo, a criacao direta da classe fica bloqueada e o acesso
+ * passa por um unico ponto central: `getInstance()`.
  *
- * A única forma de acessar a instância é através do método estático
- * `getInstance()`. Esse método verifica se a instância já existe:
+ * Se a instancia ainda nao existir, ela e criada. Caso contrario,
+ * o mesmo objeto compartilhado e reutilizado.
  *
- * - se não existir, cria uma nova instância;
- * - se já existir, retorna a mesma instância criada anteriormente.
- *
- * Dessa forma, todos os lugares da aplicação que chamarem
- * `Singleton.getInstance()` estarão usando o mesmo objeto e,
- * consequentemente, compartilhando a mesma lista de usuários.
- *
- * Resumo:
- * - `private constructor()` bloqueia criação direta com `new`;
- * - `private static instance` guarda a única instância da classe;
- * - `static getInstance()` controla a criação e o acesso ao objeto;
- * - métodos como `addUser`, `getUsers` e `removeUser` trabalham
- *   sobre o mesmo estado compartilhado.
+ * Dessa forma, todos os lugares da aplicacao que chamarem
+ * `Singleton.getInstance()` trabalham sobre a mesma lista de usuarios.
  */
 export class Singleton {
-  public users: Users[] = [];
+  private users: Users[] = [];
   private static instance: Singleton;
 
-  private constructor() {
-    // Private constructor to prevent instantiation
-  }
+  private constructor() {}
 
   public static getInstance(): Singleton {
     if (!Singleton.instance) {
@@ -47,7 +34,9 @@ export class Singleton {
   }
 
   getUsers(): Users[] {
-    return console.log(this.users), this.users;
+    const users = [...this.users];
+    console.log(users);
+    return users;
   }
 
   removeUser(name: string): void {

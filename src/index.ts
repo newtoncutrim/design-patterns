@@ -1,32 +1,11 @@
-import { Cozinha } from './creational/builder/cozinha';
-import { Refeicao } from './creational/builder/classes/refeicao';
-import { RefeicaoTradicionalBuilder } from './creational/builder/refeicao-tradicional-builder';
-import { RefeicaoVeganaBuilder } from './creational/builder/refeicao-vegana-builder';
+import { CarFactory } from './creational/factory-method/carFactory';
+import { MotorcycleFactory } from './creational/factory-method/motorcycleFactory';
 
-function exibirRefeicao(titulo: string, refeicao: Refeicao): void {
-  console.log(`\n${titulo}`);
-  console.log(refeicao.getResumo().join('\n'));
-  console.log(
-    `Total: R$ ${refeicao.getPrecoTotal().toFixed(2).replace('.', ',')}`,
-  );
-}
+const carFactory = new CarFactory();
+const motorcycleFactory = new MotorcycleFactory();
 
-const cozinha = new Cozinha();
+const car = carFactory.deliverVehicle('Fiat');
+car.stop();
 
-const refeicaoVegana = cozinha.montarRefeicaoCompleta(
-  new RefeicaoVeganaBuilder(),
-);
-
-const refeicaoTradicional = cozinha.montarRefeicaoCompleta(
-  new RefeicaoTradicionalBuilder(),
-);
-
-const refeicaoPersonalizada = new RefeicaoVeganaBuilder()
-  .reset()
-  .prepararPratoPrincipal()
-  .prepararBebida()
-  .getRefeicao();
-
-exibirRefeicao('Refeicao vegana completa', refeicaoVegana);
-exibirRefeicao('Refeicao tradicional completa', refeicaoTradicional);
-exibirRefeicao('Refeicao vegana personalizada', refeicaoPersonalizada);
+const motorcycle = motorcycleFactory.deliverVehicle('Honda');
+motorcycle.stop();
